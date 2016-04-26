@@ -53,7 +53,7 @@ navigationController?.popViewControllerAnimated(true)
 pop()
 ```
 
-### Pop
+### Dismiss
 
 ```swift
 dismissViewControllerAnimated(true, completion: nil)
