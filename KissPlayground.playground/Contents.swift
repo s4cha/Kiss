@@ -1,66 +1,50 @@
-//: Playground - noun: a place where people can play
+//: # KISS (Keep it Simple Stupid)
+
 
 import UIKit
 
-//Variables
 let vc = UIViewController()
-let vc2 = UIViewController()
-let textfield = UITextField()
-let notification = NSNotification(name: "test", object: nil)
+let notification = NSNotification(name: NSNotification.Name(rawValue: "test"), object: nil)
 let button = UIButton()
 
-
-// Translations
-
-NSLocalizedString("TranslationKey", comment: "")
-localized("TranslationKey")
-
-
-
-// RGB Colors
-
-UIColor(red: 100 / 255.0, green: 224 / 255.0, blue: 132 / 255.0, alpha: 1)
-UIColor(R: 100, G: 224, B: 132)
-
-
-
-// Push
-
-vc.navigationController?.pushViewController(vc2, animated: true)
-vc.push(vc2)
-
-// Present
-
-vc.presentViewController(vc2, animated: true, completion: nil)
-vc.present(vc2)
-
-// Dismiss
-
-vc.navigationController?.popViewControllerAnimated(true)
-vc.pop()
-
-vc.dismissViewControllerAnimated(true, completion: nil)
-vc.dismiss()
-
-// Check textfield content
-
-if let t = textfield.text where !t.isEmpty {
-    print("not empty")
+class AController : UIViewController {
+    
+//: ## Before
+    
+    func before() {
+        NSLocalizedString("TranslationKey", comment: "")
+        UIColor(red: 100 / 255.0, green: 224 / 255.0, blue: 132 / 255.0, alpha: 1)
+        navigationController?.pushViewController(vc, animated: true)
+        present(vc, animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+        if let v = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = v.cgRectValue.size.height
+        }
+        button.setBackgroundColor(.blue, forState: .normal)
+        NotificationCenter.default.addObserver(self, selector: #selector(someFunction), name: NSNotification.Name(rawValue:"MyNotification"),object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue:"MyNotif"), object: nil, userInfo: nil)
+        button.addTarget(self, action: #selector(someFunction), for: .touchUpInside)
+    }
+    
+//: ## After
+    
+    func after() {
+        localized("TranslationKey")
+        UIColor(R: 100, G: 224, B: 132)
+        push(vc)
+        present(vc)
+        pop()
+        dismiss()
+        notification.keyboardHeight
+        button.setBackgroundColor(.blue, forState: .normal)
+        observe("MyNotification", #selector(someFunction))
+        notify("MyNotif")
+        bindTap(of: button, #selector(someFunction))
+    }
+    
+    func someFunction() {}
 }
 
-if textfield.hasContent {
-    print("not empty")
-}
 
-// Get keyboard height from Keyboard Notification
-
-if let v = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-     let keyboardHeight = v.CGRectValue().size.height
-}
-
-notification.keyboardHeight
-
-
-// UIButton background color
-button.setBackgroundColor(.blueColor(), forState: .Normal)
 

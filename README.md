@@ -2,6 +2,33 @@
 
 This intends to be copy pasted in an iOS Xcode project to facilitate things we do all the time :)
 
+## Notifications
+
+Observe
+```swift
+NotificationCenter.default.addObserver(self, selector: #selector(someFunction), name: NSNotification.Name(rawValue:"MyNotification"),object: nil)
+```
+```swift
+observe("MyNotification", #selector(someFunction))
+```
+Post
+
+```swift
+NotificationCenter.default.post(name: NSNotification.Name(rawValue:"MyNotif"), object: nil, userInfo: nil)
+```
+```swift
+notify("MyNotif")
+```
+
+## Button Tap event
+
+```swift
+button.addTarget(self, action: #selector(someFunction), for: .touchUpInside)
+```
+
+```swift
+bindTap(of: button, #selector(someFunction))
+```
 
 ## Translations
 
